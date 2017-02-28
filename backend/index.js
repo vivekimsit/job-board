@@ -2,12 +2,13 @@
 
 var express = require('express');
 var Promise = require('promise');
-var app = express();
 var router = express.Router();
-var PORT = 3000;
-var pool = require('./db.js');
+var app = express();
 
+var pool = require('./db.js');
 var User = require('./models');
+
+var PORT = 3000;
 
 app.use(function (req, res, next) {
   pool.connect(function(error, client, done) {
@@ -83,17 +84,6 @@ var userInfo = function userInfo(req, res) {
           user.applications(req)
         ]);
       })
-      /*
-      .then(function fullfilled(user) {
-        return user.companies(req);
-      })
-      .then(function fullfilled(user) {
-        return user.listings(req);
-      })
-      .then(function fullfilled(user) {
-        return user.applications(req);
-      })
-      */
       .then(function fullfilled([
             id, name, createdAt, companies, listings, applications]) {
         res.json({
