@@ -1,0 +1,26 @@
+{
+  "name": "skilltest-backend",
+  "version": "1.0.0",
+  "description": "Skill test for back end.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/jobbatical/skilltest-backend.git"
+  },
+  "keywords": [
+    "test",
+    "interview",
+    "back-end"
+  ],
+  "author": "vivekimsit@gmail.com",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/jobbatical/skilltest-backend#readme",
+  "dependencies": {
+    "express": "^4.14.1",
+    "pg": "^6.1.2",
+    "promise": "^7.1.1"
+  }
+}

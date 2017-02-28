@@ -1,0 +1,166 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!-- Place favicon.ico in the root directory -->
+        <style type="text/css">
+          html {
+            font-family: sans-serif; /* 1 */
+            line-height: 1.15; /* 2 */
+            -ms-text-size-adjust: 100%; /* 3 */
+            -webkit-text-size-adjust: 100%; /* 3 */
+            height: 100vh;
+            box-sizing: border-box;
+            -moz-box-sizing:border-box;
+            -webkit-box-sizing:border-box;
+          }
+
+          *, *:before, *:after {
+            box-sizing: inherit;
+          }
+
+          /**
+           * Remove the margin in all browsers (opinionated).
+           */
+
+          body {
+            margin: 0;
+            height: 100%;
+            min-height: 100%;
+          }
+
+          /**
+           * Add the correct display in IE 9-.
+           */
+
+          article,
+          aside,
+          footer,
+          header,
+          nav,
+          section {
+            display: block;
+          }
+
+          /**
+           * Correct the font size and margin on `h1` elements within `section` and
+           * `article` contexts in Chrome, Firefox, and Safari.
+           */
+
+          h1 {
+            font-size: 2em;
+            margin: 0.67em 0;
+          }
+
+          /* Grouping content
+             ========================================================================== */
+
+          /**
+           * Add the correct display in IE 9-.
+           * 1. Add the correct display in IE.
+           */
+
+          figcaption,
+          figure,
+          main { /* 1 */
+            display: block;
+          }
+
+          #a {
+            margin: 10px;
+            overflow: auto;
+            background-color: lightgreen;
+            height: calc(100% - 130px);
+          }
+
+          #b {
+            background-color: lightblue;
+            margin: 10px;
+            height: 50px;
+          }
+
+          .d {
+            background-color: green;
+            margin: 10px;
+            height: 50px;
+          }
+
+          footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background-color: darkblue;
+            width: 100%;
+            margin-top: 20px;
+            height: 50px;
+          }
+
+          @media screen and (min-width: 450px) {
+             #a {
+               height: calc(100% - 130px);
+             }
+
+             .d:first-child {
+               margin-right: 5px; 
+             }
+
+             .d:last-child {
+               margin-left: 5px; 
+             }
+
+             .d {
+               display: inline-block;
+               width: calc(50% - 18px);
+             }
+          }
+
+          @media screen and (min-width: 840px) {
+            body {
+              display: table;
+              margin: auto;
+            }
+
+            #a {
+              display: inline-block;
+              margin-top: 20px;
+              margin-right: 0;
+              margin-bottom: 20px;
+              width: 500px;
+              height: calc(100% - 90px);
+             }
+
+            #b {
+              float: right;
+              display: inline-block;
+              margin-top: 20px;
+              margin-bottom: 20px;
+              width: 300px;
+             }
+
+            .d {
+              display: inline-block;
+              width: calc(50% - 18px);
+            }
+          }
+        </style>
+    </head>
+    <body>
+        <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+      <section id="b"></section>
+      <section id="a">
+        <section class="d"></section>
+        <section class="d"></section>
+      </section>
+      <footer></footer>
+    </body>
+</html>
