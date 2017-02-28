@@ -45,30 +45,26 @@ User.getById = function getById(req) {
 
 UserProto.companies = function companies(req) {
   var queryString = 'select c.id, c.name, t.contact_user '+
-    'from companies c, teams t '+
-    'where t.user_id = $1::int and t.company_id = c.id '+
-    'limit $2::int';
-  var self = this;
+      'from companies c, teams t '+
+      'where t.user_id = $1::int and t.company_id = c.id '+
+      'limit $2::int';
   return queryPromise(req, queryString, [this.id, User._RESOURCE_LIMIT])
     .then(function fullfilled(result) {
-      self._companies = result.rows.map(function (data) {
+      return result.rows.map(function (data) {
         return new Company(data);
       });
-      return self;
     });
 };
 
 UserProto.listings = function listings(req) {
   var queryString = 'select * from listings '+
-    'where created_by = $1::int '+
-    'limit $2::int';
-  var self = this;
+      'where created_by = $1::int '+
+      'limit $2::int';
   return queryPromise(req, queryString, [this.id, User._RESOURCE_LIMIT])
     .then(function fullfilled(result) {
-      self._listings = result.rows.map(function (data) {
+      return result.rows.map(function (data) {
         return new Listing(data);
       });
-      return self;
     });
 };
 
@@ -79,12 +75,12 @@ UserProto.applicationListings = function applications(req) {
       "where a.user_id = $1::int order by a.created_at desc limit 3";
   var self = this;
   return queryPromise(req, queryString, [this.id])
-    .then(function fullfilled(result) {
-      self._appliedListings = result.rows.map(function (data) {
-        return new Listing(data);
+      .then(function fullfilled(result) {
+        self._appliedListings = result.rows.map(function (data) {
+          return new Listing(data);
+        });
+        return self;
       });
-      return self;
-    });
 };
 
 UserProto.applications = function applications(req) {
@@ -93,14 +89,12 @@ UserProto.applications = function applications(req) {
     'from applications a, listings l '+
     'where a.user_id = $1::int and a.listing_id = l.id '+
     'limit $2::int';
-  var self = this;
   return queryPromise(req, queryString, [this.id, User._RESOURCE_LIMIT])
-    .then(function fullfilled(result) {
-      self._applications = result.rows.map(function (data) {
-        return new Application(data);
+      .then(function fullfilled(result) {
+        return result.rows.map(function (data) {
+          return new Application(data);
+        });
       });
-      return self;
-    });
 };
 
 function Company(opt_data) {

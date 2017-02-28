@@ -12,10 +12,11 @@ var User = require('./models');
 app.use(function (req, res, next) {
   pool.connect(function(error, client, done) {
     // Handle connection errors
-    if(error) {
-      done();
+    if (error) {
+      done(error);
       console.log(error.message);
-      return res.status(500).json({success: false, data: error});
+      return res.status(500)
+          .json({success: false, data: error});
     }
     req.client = client;
     req.done = done;
@@ -24,7 +25,6 @@ app.use(function (req, res, next) {
 });
 
 router.get('/topActiveUsers', (req, res) => {
-  //User.test(req, res);
   topActiveUsers(req, res);
 });
 
@@ -72,6 +72,18 @@ var topActiveUsers = function topActiveUsers(req, res) {
 
 var userInfo = function userInfo(req, res) {
   User.getById(req)
+      // run companies/listings/applications in "parallel"
+      .then(function fullfilled(user) {
+        return Promise.all([
+          user.id,
+          user.name,
+          user.createdAt,
+          user.companies(req),
+          user.listings(req),
+          user.applications(req)
+        ]);
+      })
+      /*
       .then(function fullfilled(user) {
         return user.companies(req);
       })
@@ -81,14 +93,16 @@ var userInfo = function userInfo(req, res) {
       .then(function fullfilled(user) {
         return user.applications(req);
       })
-      .then(function fullfilled(user) {
+      */
+      .then(function fullfilled([
+            id, name, createdAt, companies, listings, applications]) {
         res.json({
-          id: user.id,
-          name: user.name,
-          createdAt: user.createdAt,
-          companies: user._companies,
-          listings: user._listings,
-          applications: user._applications
+          id: id,
+          name: name,
+          createdAt: createdAt,
+          companies: companies,
+          listings: listings,
+          applications: applications
         });
       })
       .catch(function rejected(error) {
@@ -98,15 +112,4 @@ var userInfo = function userInfo(req, res) {
       .finally(function () {
         res.end();
       });
-};
-
-User.test = function test(req, res) {
-  var client = req.client;
-  var queryString = "select * from users u inner join (select user_id, count(id) as cnt from "+
-      "applications where id in (select id from applications where "+
-      "created_at > current_date - interval '1 week') group by user_id) "+
-      "a on u.id = a.user_id order by a.cnt desc";
-  client.query(queryString, [], function result(error, result) {
-    res.json(result.rows);
-  });
 };
