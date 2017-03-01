@@ -44,8 +44,27 @@ app.listen(PORT, function () {
 });
 
 var topActiveUsers = function topActiveUsers(req, res) {
+  var ENTRIES_PER_PAGE = 3;
+  var startIndex = 0;
+  var total = 0;
+  req.query.page = +req.query.page || 0;
+
+  var pageNum = req.query.page > 0 ? req.query.page : 0;
+  if (pageNum > 0) {
+    startIndex = ENTRIES_PER_PAGE * (pageNum - 1);
+  }
+  total = ENTRIES_PER_PAGE * (pageNum + 1);
+
   User.topActiveUsers(req)
       .then(function fullfilled(users) {
+        if (users.length < startIndex) {
+          throw new Error('Invalid pagination offset');
+        }
+        if (users.length > total) {
+          users = users.slice(startIndex, startIndex + ENTRIES_PER_PAGE);
+        } else {
+          users = users.splice(startIndex);
+        }
         return Promise.all(users.map(function (user) {
           return user.applicationListings(req);
         }));
