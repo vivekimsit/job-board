@@ -5,7 +5,7 @@ var Promise = require('promise');
 var router = express.Router();
 var app = express();
 
-var pool = require('./db.js');
+var pool = require('./db.js')();
 var User = require('./models');
 
 var PORT = 3000;
